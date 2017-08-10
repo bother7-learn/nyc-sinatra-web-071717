@@ -18,22 +18,19 @@ class FiguresController < ApplicationController
     @figure.titles.clear
     @figure.name = params[:figure][:name]
     if params[:figure][:title_ids]
-    params[:figure][:title_ids].each do |title_id|
-      @title = Title.find(title_id)
-      # binding.pry
-      @figure.titles << @title
-      # figure_title = FigureTitle.new(title_id: title_id, figure_id: @figure.id)
-    end
+      params[:figure][:title_ids].each do |title_id|
+        @title = Title.find(title_id)
+        @figure.titles << @title
+      end
     end
 
     if  params[:figure][:landmark_ids]
-    params[:figure][:landmark_ids].each do |landmark_id|
-      @landmark = Landmark.find(landmark_id)
-      @figure.landmarks << @landmark
-      @landmark.save
-      # figure_title = FigureTitle.new(title_id: title_id, figure_id: @figure.id)
+      params[:figure][:landmark_ids].each do |landmark_id|
+        @landmark = Landmark.find(landmark_id)
+        @figure.landmarks << @landmark
+        @landmark.save
+      end
     end
-  end
 
     if !params[:title][:name].empty?
       new_title = Title.new(name: params[:title][:name])
@@ -47,11 +44,8 @@ class FiguresController < ApplicationController
       new_landmark.save
     end
 
-
     @figure.save
     redirect "/figures/#{@figure.id}"
-    binding.pry
-
   end
 
 
